@@ -1,0 +1,21 @@
+{
+  "name": "bangtube",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minseok1109/bangtube.git"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "bang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/minseok1109/bangtube/issues"
+  },
+  "homepage": "https://github.com/minseok1109/bangtube#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
