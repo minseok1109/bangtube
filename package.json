@@ -2,12 +2,14 @@
   "name": "bangtube",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/minseok1109/bangtube.git"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "author": "bang",
   "license": "MIT",
@@ -17,5 +19,11 @@
   "homepage": "https://github.com/minseok1109/bangtube#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/preset-env": "^7.15.0",
+    "nodemon": "^2.0.12"
   }
 }
