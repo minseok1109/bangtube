@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node src/init.js"
   },
   "author": "bang",
   "license": "MIT",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/minseok1109/bangtube#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mongoose": "^6.1.7",
     "morgan": "^1.10.0",
     "pug": "^3.0.2"
   },
