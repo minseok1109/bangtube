@@ -1,5 +1,6 @@
 import Video from "../models/Video.js";
 
+//Home
 export const home = async (req, res) => {
   try {
     const videos = await Video.find({});
@@ -9,16 +10,17 @@ export const home = async (req, res) => {
   }
 };
 
+//Watch
 export const watch = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
-  console.log(video);
   if (!video) {
     return res.render("404", { pageTitle: "Video not Found" });
   }
   return res.render("watch", { pageTitle: `${video.title}`, video });
 };
 
+//Edit
 export const getEdit = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
@@ -33,16 +35,34 @@ export const getEdit = async (req, res) => {
 
 export const postEdit = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
+  const { title, description, hastags } = req.body;
+  const video = await Video.exists({ _id: id });
   if (!video) {
     return res.render("404", { pageTitle: "Video not Found" });
   }
+  await Video.findByIdAndUpdate(id, {
+    title,
+    description,
+    hastags: Video.formatHastags(hastags),
+  });
   return res.redirect(`/videos/${id}`);
 };
 
-export const search = (req, res) =>
-  res.render("search", { pageTitle: "Search" });
+//Search
+export const search = async (req, res) => {
+  const { keyword } = req.query;
+  let videos = [];
+  if (keyword) {
+    videos = await Video.find({
+      title: {
+        $regex: new RegExp(keyword, "i"),
+      },
+    });
+  }
+  return res.render("search", { pageTitle: "Search", videos });
+};
 
+//Upload
 export const getUpload = (req, res) => {
   res.render("upload", { pageTitle: "Upload Video" });
 };
@@ -53,9 +73,7 @@ export const postUpload = async (req, res) => {
     await Video.create({
       title,
       description,
-      hastags: hastags
-        .split(",")
-        .map((word) => (word.startWith("#") ? word : `#${word}`)),
+      hastags: Video.formatHastags(hastags),
       meta: {
         views: 0,
         rating: 0,
@@ -71,6 +89,9 @@ export const postUpload = async (req, res) => {
   }
 };
 
-export const deleteVideo = (req, res) => {
-  return res.render("deleteVideo", { pageTitle: "Delete Video" });
+//Delete Video
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  await Video.findByIdAndDelete(id);
+  return res.redirect("/");
 };

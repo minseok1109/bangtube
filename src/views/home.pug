@@ -2,8 +2,8 @@ extends base
 include mixins/video
 
 block content
-    if !videos
-        h1 No videos
+    if videos.length === 0
+        h1 No Vidoes
     else
         each video in videos
             +video(video)
